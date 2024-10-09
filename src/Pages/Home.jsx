@@ -2,6 +2,7 @@ import React from "react";
 import { Categories } from "../assets/mockData";
 import { Link } from "react-router-dom";
 import Info from "../Components/Info";
+import Category from "../Components/Category";
 
 const Home = () => {
   return (
@@ -47,6 +48,7 @@ const Home = () => {
         </div>
       </div>
       <Info />
+      <Category />
     </div>
   );
 };
