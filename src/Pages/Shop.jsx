@@ -1,9 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import ProductCard from '../Components/ProductCard';
 
 const Shop = () => {
+    const products = useSelector(state=>state.product)
     return (
-        <div>
-            <h1>Shop</h1>
+        <div className=' mx-auto py-12 px-4 md:px-16 lg:px-24'>
+            <h1 className="text-2xl font-bold mb-6 text-center">Shop</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 cursor-pointer">
+                {products.products.map((product,index)=>{
+                    return(
+                        <div key={index}>
+                             <ProductCard product={product} />
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     );
 };

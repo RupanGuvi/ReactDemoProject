@@ -1,10 +1,22 @@
-import React from "react";
-import { Categories } from "../assets/mockData";
+import React, { useEffect } from "react";
+import { Categories, mockData } from "../assets/mockData";
 import { Link } from "react-router-dom";
 import Info from "../Components/Info";
 import Category from "../Components/Category";
+import { useDispatch, useSelector } from "react-redux";
+import { setProducts } from "../Redux/productSlice";
+import ProductCard from "../Components/ProductCard";
+
+
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const products = useSelector(state=>state.product)
+
+  useEffect(()=>{
+    dispatch(setProducts(mockData))
+  },[])
+
   return (
     <div className="bg-white mt-2 px-4 md:px-16 lg:px-24">
       <div className="container mx-auto py-4 flex flex-col md:flex-row space-x-2">
@@ -49,6 +61,18 @@ const Home = () => {
       </div>
       <Info />
       <Category />
+      <div className="container mx-auto py-12">
+        <h1 className="text-2xl font-bold mb-6 text-center">Top Products</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 cursor-pointer">
+          {products.products.slice(0,5).map((product,index)=>{
+            return(
+              <div key={index}>
+                <ProductCard product={product} />
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </div>
   );
 };
