@@ -72,12 +72,6 @@ const navigate = useNavigate()
         <Link to={"/shop"} className="hover:underline">
           Shop
         </Link>
-        <Link to={"/about"} className="hover:underline">
-          About
-        </Link>
-        <Link to={"/contact"} className="hover:underline">
-          Contact
-        </Link>
       </div>
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
         {login ? (
