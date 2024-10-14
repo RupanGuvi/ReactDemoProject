@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import Modal from "./Modal";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 const Navbar = () => {
-  const products = useSelector((state)=>state.cart.products)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [login, setLogin] = useState(true);
+  const products = useSelector((state) => state.cart.products);
+
+  const openLogin = () => {
+    setLogin(true);
+    setModalOpen(true);
+  };
+  const openRegister = () => {
+    setLogin(false);
+    setModalOpen(true);
+  };
+
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto px-4 md:px-16 lg:px-24 py-4 flex justify-center items-center">
@@ -24,12 +38,18 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <Link to={"/cart"} className="relative">
             <FaShoppingCart className="text-xl" />
-            {products.length > 0 &&(
+            {products.length > 0 && (
               <span className="absolute top-0 text-xs w-3 left-3 bg-red-600 rounded-full flex justify-center items-center text-white">
-                {products.length}</span>
-            ) }
+                {products.length}
+              </span>
+            )}
           </Link>
-          <button className="hidden md:block">SignIn | SignUp</button>
+          <button
+            className="hidden md:block"
+            onClick={() => setModalOpen(true)}
+          >
+            SignIn | SignUp
+          </button>
           <button className="block md:hidden">
             <FaUser className="text-xl" />
           </button>
@@ -49,6 +69,13 @@ const Navbar = () => {
           Contact
         </Link>
       </div>
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
+        {login ? (
+          <SignIn openRegister={openRegister} />
+        ) : (
+          <SignUp openLogin={openLogin} />
+        )}
+      </Modal>
     </nav>
   );
 };

@@ -7,11 +7,14 @@ import {
 } from "../Redux/cartSlice";
 import { FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Modal from "../Components/Modal";
+import Address from "../Components/Address";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [address, setAddress] = useState("Taramani, Chennai");
+  const [modalOpen,setModalOpen] = useState(false);
   const navigate = useNavigate();
   return (
     <div className="container mx-auto py-8 min-h-96 px-4 md:px-16 lg:px-24">
@@ -86,7 +89,9 @@ const Cart = () => {
                   Shipping To:
                   <span className="text-sm font-bold">{address}</span>
                 </p>
-                <button className="text-blue-500 hover:underline mt-1 ml-2">
+                <button className="text-blue-500 hover:underline mt-1 ml-2"
+                onClick={()=>setModalOpen(true)}
+                >
                   Change Address
                 </button>
               </div>
@@ -102,6 +107,9 @@ const Cart = () => {
               </button>
             </div>
           </div>
+          <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} >
+            <Address  setAddress={setAddress} setModalOpen={setModalOpen} />
+          </Modal>
         </div>
       ) : (
         <div className="flex justify-center">
